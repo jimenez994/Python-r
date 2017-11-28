@@ -1,0 +1,17 @@
+pip install Django
+--we are stalling a third party module which in this case is Django
+pip list
+--shows the list of modules that are install
+pip install Django (We know you already ran this one. What information do you see returned in terminal after this command?)
+--List installed packages, including editables.
+pip freeze (What's the difference between freeze and list?)
+--shows installed packages
+First cd into your Desktop directory (cd ~/Desktop), then run this command: pip freeze > requirements.txt. What do you see when you ls? What's inside this file?
+--it created a txt file called requirements.txt and inside shows the pip freeze which is the are the installed packages
+pip uninstall Django
+--it uninstall Django
+pip show Django
+--nothing happened 
+pip search Flask. This one might take a moment to execute.
+--output with all packages containing the name "Flask" and
+a description with that. 
