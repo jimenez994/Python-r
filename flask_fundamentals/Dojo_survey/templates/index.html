@@ -1,0 +1,36 @@
+<!Doctype html>
+<html>
+
+<head>
+    <title>Index</title>
+</head>
+
+<body>
+    <h1>Dojo Survey</h1>
+    <form action="/info" method="post">
+        <input type="text" name="name" placeholder="name"><br/>
+        <input type="text" name="last" placeholder="last"><br/>
+        <label for="dojo location">Dojo Location</label>
+        <select name="location">
+            <option value="Washington DC">Washington DC</option>
+            <option value="San Jose">San Jose</option>
+        </select><br/>
+        <label for="favorite language">Favorite Language</label>
+        <select name="fav_language">
+            <option value="python">Python</option>
+            <option value="node">NODE</option>
+        </select><br/>
+        <label for="comment">Comment (optional)</label>
+        <br/>
+        <textarea name="comment_field" type="text" placeholder="text" rows="4" cols="50">
+                    </textarea>
+        <br/>
+
+        <input type="submit" value="Register">
+
+
+    </form>
+
+</body>
+
+</html>
