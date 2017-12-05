@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dojo Survey</title>
+</head>
+<body>
+    <h1>Dojo Survey</h1>
+    <form action="/processdata" method="post">
+        Name: <input type="text" name="name" placeholder="first name">
+        <br/>
+        Last: <input type="text" name="last" placeholder="last name">
+        <br/>
+        <label for="dojo location">Dojo Location</label>
+        <select name="location">
+            <option value="Washington DC">Washington DC</option>
+            <option value="NY">New York</option>
+            <option value="miami">Miami</option>
+            <option value="las vegas">Las Vegas</option>
+        </select>
+        <br/>
+        <label for="favorite language">Favorite Language</label>
+        <select name="fav_language">
+            <option value="python">Python</option>
+            <option value="node">NODE</option>
+            <option value="swift">Swift</option>
+            <option value="java">JAVA</option>
+        </select>
+        <br/>
+        <label for="comment">Comment (optional):</label>
+        <br/>
+        <textarea name="comment_field" type="text" placeholder="text" rows="4" cols="50">
+                            </textarea>
+        <br/>
+        
+        <input type="submit" value="Register">
+
+    </form>
+    
+</body>
+</html>
