@@ -1,0 +1,5 @@
+To Do: MySQL Workbench Setup
+1. Used Homebrew --> brew install mysql
+2. brew services start mysql
+3. mysqladmin -u root password "root"
+4. mysql -u root -p
