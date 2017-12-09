@@ -1,0 +1,19 @@
+1)
+OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'root'@'localhost' (using password: YES)")
+Fix:
+make sure to supply the right password
+it wold be 'root'
+2)
+OperationalError: (_mysql_exceptions.OperationalError) (1045, "Access denied for user 'roo'@'localhost' (using password: YES)")
+Fix:
+make sure to supply the right user, on this case wold be 'root'
+3)
+OperationalError: (_mysql_exceptions.OperationalError) (2003, "Can't connect to MySQL server on '127.0.0.1' (61)")
+fix:
+make is connected to right port 
+on this case would be '3306'
+4)
+NoSuchModuleError: Can't load plugin: sqlalchemy.dialects:myql
+fix:
+double check the code is spell correctly and theres nothing missing
+on this it was missing s
