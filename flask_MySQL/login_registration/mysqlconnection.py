@@ -1,16 +1,18 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.sql import text
 
+
 class MySQLConnection(object):
     def __init__(self, app, db):
         config = {
-                'host': 'localhost',
-                'database': db, 
-                'user': 'root',
-                'password': 'root',
-                'port': '3306' 
+            'host': 'localhost',
+            'database': db,
+            'user': 'root',
+            'password': 'root',
+            'port': '3306'
         }
-        DATABASE_URI = "mysql://{}:{}@127.0.0.1:{}/{}".format(config['user'], config['password'], config['port'], config['database'])
+        DATABASE_URI = "mysql://{}:{}@127.0.0.1:{}/{}".format(
+            config['user'], config['password'], config['port'], config['database'])
         app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URI
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
         self.db = SQLAlchemy(app)
@@ -25,6 +27,7 @@ class MySQLConnection(object):
             return result.lastrowid
         else:
             self.db.session.commit()
+
 
 def MySQLConnector(app, db):
     return MySQLConnection(app, db)

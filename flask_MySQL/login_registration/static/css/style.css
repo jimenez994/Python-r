@@ -1,0 +1,12 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.wrapper{
+    margin: 20px auto;
+    width: 780px;
+    height: 900px;
+}
+fieldset{
+    padding: 10px;
+}
