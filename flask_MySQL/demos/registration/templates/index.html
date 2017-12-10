@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration</title>
+</head>
+<body>
+
+<h1>Registration</h1>
+
+<form action="/register" method="post">
+	<input type="text" name="email" placeholder="Email"><br>
+	<input type="text" name="first" placeholder="First Name"><br>
+	<input type="text" name="last" placeholder="Last Name"><br>
+	<input type="password" name="password" placeholder="Password"><br>
+	<input type="password" name="confirm" placeholder="Confirm Password"><br>
+	Date of Birth: <input type="date" name="dob"><br>
+	<select id="something" name="something">
+		<option>1</option>
+		<option>2</option>
+	</select>
+	<input type="submit" value="Register">
+</form>
+
+{% with messages = get_flashed_messages() %}
+	{% if messages %}
+		{% for message in messages %}
+			<p style="background-color:red;color:white;">
+				{{ message }}
+			</p>
+		{% endfor %}
+	{% endif %}
+{% endwith %}
+
+<script type="text/javascript">
+	document.getElementById("something").selectedIndex = -1;
+</script>
+
+</body>
+</html>

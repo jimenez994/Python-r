@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='../static/css/style2.css')}}">
+    <title>Sucsess</title>
+</head>
+<body>
+    <div class="wrapper">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p style= 'color:green;'>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <fieldset>
+            <legend>Email Addresses Entered:</legend>
+            <table>
+                <tr>
+                    <th>Email:</th>
+                    <th>Date/time</th>
+                </tr>
+                {% for inEmail in emails %}
+                <tr>
+                    <td>{{inEmail["email"]}}</td>
+                    <td>{{inEmail["date"]}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </fieldset>
+    </div>
+</body>
+</html>

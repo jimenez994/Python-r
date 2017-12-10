@@ -1,0 +1,14 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
+.wrapper{
+    padding: 20px;
+    margin: 20px auto;
+    width: 790px;
+    height: 900px;
+}
+fieldset{
+    padding: 15px;
+
+}

@@ -1,0 +1,15 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    /* outline: 1px solid black; */
+}
+.wrapper{
+    width: 780px;
+    height: 850px;
+    margin: 20px auto;
+    padding: 15px;
+    
+}
+fieldset{
+    padding: 10px;
+}

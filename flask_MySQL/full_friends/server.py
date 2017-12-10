@@ -20,8 +20,6 @@ def create():
     if len(request.form['age']) < 2:
         errors.append("You must be older to be my friend")
     
-        pass
-    
     if errors == []:
         query = "INSERT INTO friends (name, age, created_at,updated_at) VALUES (:name, :age, NOW(), NOW())"
         # We'll then create a dictionary of data from the POST data received.
