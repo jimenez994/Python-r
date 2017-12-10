@@ -4,10 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../static/css/style.css')}}">
     <title>Full Friends</title>
 </head>
 <body>
+    <div class="wrapper">
+        <h1>Full Friends</h1>
+        <fieldset>
+            <legend>Add a Friend:</legend>
+            <form action="/add" method="POST">
+                <p>Name:</p><input type="text" name="name">
+                <p>Age:</p><input type="text" name="age">
+                <input type="submit" name="button" value="Submit">
+            </form>
+        </fieldset>
+        <fieldset>
+            <legend>Friends:</legend>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Friends Since</th>
+                    <th></th>
+                </tr>
+                 {% for friend in all_friends %}
+                <tr>
+                    <td>{{friend["name"]}}</td>
+                    <td>{{friend["age"]}}</td>
+                    <td>{{friend["date"]}}</td>
+                    <td>
+                        
+                </tr>
+                {% endfor %}
+            </table>
+
+        </fieldset>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <p style= 'color:red;'>{{message}}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
     
 </body>
 </html>

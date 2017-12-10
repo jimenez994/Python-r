@@ -1,0 +1,16 @@
+*{
+    
+    /* outline: 1px solid black; */
+}
+.wrapper{
+    margin: 20px auto;
+    width: 780px;
+    height: 900px;
+    padding: 10px;
+}
+p{
+    margin-bottom: 3px;
+}
+table {
+    border: 1px solid black;
+}
