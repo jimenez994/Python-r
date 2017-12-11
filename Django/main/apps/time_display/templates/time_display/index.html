@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     {% load static %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <link rel="stylesheet" href="{% static 'time_display/css/style.css' %}" media="screen" title="no title" charset="utf-8">
+    <title>Time Display</title>
+</head>
+<body>
+    <div class="page">
+        <div class="title">
+            <h1>Time Display</h1>
+        </div>
+        <div class="line">
+            <h1>{{time}}</h1>
+        </div>
+    </div>
+    
+</body>
+</html>
