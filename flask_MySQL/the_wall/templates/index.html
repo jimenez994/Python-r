@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='../static/css/style.css')}}">
+</head>
+<body>
+    <div class="page">
+        <div class="left"></div>
+        <div class="wrapper">
+            <h1>Login and Registration</h1>
+            <fieldset>
+                <legend>Register</legend>
+                <form action="/register" method="POST">
+                    <p>First Name:</p>
+                    <input class="comment_area" type="text" name="first">
+                    <p>Last Name:</p>
+                    <input class="comment_area" type="text" name="last">
+                    <p>Email:</p>
+                    <input class="comment_area" type="text" name="email">
+                    <p>Password:</p>
+                    <input class="comment_area" type="password" name="password">
+                    <p>Password Confirmation:</p>
+                    <input class="comment_area" type="password" name="pass_confirm"><br/>
+                    <input class="butn" type="submit" name="button" value="Register">
+                </form>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Log In</legend>
+                <form action="/login" method="POST">
+                    <p>Email:</p>
+                    <input class="comment_area" type="text" name="email">
+                    <p>Password:</p>
+                    <input class="comment_area" type="password" name="password"><br/>
+                    <input class="butn" type="submit" name="button" value="Log In">
+                </form>
+            </fieldset>
+            
+            {% with messages = get_flashed_messages() %}
+                {% if messages %} 
+                    {% for message in messages %}
+                        <p style='color:red;'>{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+        </div>
+    </div>
+    
+</body>
+</html>

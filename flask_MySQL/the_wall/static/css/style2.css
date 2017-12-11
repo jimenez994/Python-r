@@ -1,0 +1,59 @@
+*{
+    
+    color: white;
+}
+.wrapper{
+    margin: 20px auto;
+    padding: 10px;
+    vertical-align: top;
+    background-color: rgb(34, 52, 68);
+    width: 750px;   
+}
+.title, .welcome{
+    display: inline-block;
+}
+.user_m{
+    margin-top: -15px;
+}
+.welcome{
+    margin-left: 100px;
+}
+fieldset,p,h1,h3,h2,div,form,legend,input{
+    background-color: rgb(34, 52, 68);
+    margin-top: 2px;
+}
+.comment ,form{
+    margin-top: -15px; 
+}
+.comment{
+    margin-left: -20px;
+}
+.user_c{
+    margin-top: -15px;
+    font-size: 10px;
+    margin-bottom: 15px;
+}
+.posts{
+    overflow: scroll;
+    height: 574px;
+}
+
+.butn{
+    border-radius: 7px;
+    margin-top: 10px;
+    
+    background-color: rgb(88, 223, 202);
+    padding: 5px;
+}
+.butn1{
+    border-radius: 7px;
+    margin-top: 10px;
+    background-color: rgb(71, 170, 152);
+    padding: 5px;
+}
+textarea, .comment_area{
+    background-color: white;
+    border-radius: 5px;
+    margin-top: -8px;
+    color: rgb(34, 52, 68);
+}

@@ -1,0 +1,39 @@
+*{
+    /* background-color: rgb(184, 88, 108); */
+    color: white;
+}
+.page{
+    margin: 20px auto;
+    height: 900px;
+    width: 750px;
+}
+.left{
+    width: 25%;
+    height: 900px;
+    background-color: rgb(88, 223, 202);
+    display: inline-block;
+}
+.wrapper{
+    padding: 10px;
+    vertical-align: top;
+    background-color: rgb(34, 52, 68);
+    height: 880px;
+    width: 70%;
+    display: inline-block;
+}
+fieldset,p,h1,h3,form,legend,input{
+    background-color: rgb(34, 52, 68);
+}
+
+.butn{
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: rgb(88, 223, 202);
+    padding: 5px;
+}
+.comment_area{
+    background-color: white;
+    border-radius: 5px;
+    margin-top: -8px;
+    color: rgb(34, 52, 68);
+}
