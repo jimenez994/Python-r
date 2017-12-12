@@ -1,0 +1,31 @@
+creating a project 
+> django-admin startproject somename
+	>cd somename
+	>mkdir apps
+	> cd apps
+		>touch __init__.py
+		>python ../manage.py startapp appname
+	Go to your main folder and run python > manage.py runserver
+
+to link your css in html:
+{% load static %}
+<link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}" media="screen" title="no title"  charset="utf-8">
+
+make form work
+example: 
+<form action="/blogs/create" method="post">
+	{% csrf_token %}     <---------------------requierment
+	Blog Name: <input type="text" name="name" placeholder="blog name">
+    Description: <textarea name="desc" placeholder="description"></textarea>
+	<input type="submit" value="submit">
+</form>
+
+Session
+In our terminal, head to the directory where manage.py resides and run the following commands:
+> python manage.py makemigrations
+>cd  python manage.py migrate
+
+to run the server 
+python manage.py runserver 
+
+

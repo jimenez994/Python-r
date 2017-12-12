@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Result</title>
+</head>
+<body>
+    {{ request.session.count }}
+    <h1>Result</h1>
+    <h3>Name: {{ request.session.name }}</h3>
+    <h3>Dojo Location: {{ request.session.dojolocation }}</h3>
+    <h3>Favorite Language: {{ request.session.favlang }}</h3>
+    <h3>Comments: {{ request.session.text_field }}</h3>
+    
+    <a href="/"><button>GO BACK</button></a>
+</body>
+</html>

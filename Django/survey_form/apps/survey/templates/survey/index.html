@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Survey</title>
+</head>
+<body>
+    <h1>Survey</h1>
+    <form action="/process" method="post">
+         {% csrf_token %}
+        <h4>Your Name: <input type="text" name="name"></h4>
+        <h4>Dojo Location:
+            <select name="dojolocation">
+                <option>Dallas</option>
+                <option>DC</option>
+                <option>New York</option>
+                <option>Las Vegas</option>
+            </select>
+        </h4>
+        <h4>Favorite Language: <select name="favlang">
+            <option>Java Script</option>
+            <option>PHP</option>
+            <option>Java</option>
+        </select></h4>
+        <h4>Commeent (optional)</h4>
+        <textarea name="text_field" placeholder="text" rows="4" cols="50"></textarea><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

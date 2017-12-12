@@ -1,4 +1,4 @@
-"""main URL Configuration
+"""survey_form URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -17,12 +17,6 @@ from django.conf.urls import url, include
 from django.contrib import admin
 
 urlpatterns = [
-    url(r'^$', include('apps.first_app.urls')),
-    url(r'^first_app/', include('apps.first_app.urls')),
-    url(r'^blogs/', include('apps.blogs.urls')),
-    url(r'^time_display/', include('apps.time_display.urls')),
-    url(r'^random_word/', include('apps.random_word.urls')),
-
-    url(r'^admin/', admin.site.urls),
+    url(r'^', include('apps.survey.urls')),
 
 ]
