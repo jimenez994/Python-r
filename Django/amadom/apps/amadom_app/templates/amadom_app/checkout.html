@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Checkout</title>
+</head>
+<body>
+    <h1>Thanks you for your business!</h1>
+    <h3>We charged your credit card for ${{ request.session.total }}</h3>
+    <h4>You have order {{ request.session.items }} items so far and spend ${{ request.session.totalspend }} with Amadom.com!</h4>
+    <form action="/back" method="post">
+        {% csrf_token %}
+        <input id="back" type="submit" value="Continue Shopping!">
+    </form>
+</body>
+</html>

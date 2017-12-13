@@ -25,7 +25,4 @@ In our terminal, head to the directory where manage.py resides and run the follo
 > python manage.py makemigrations
 >cd  python manage.py migrate
 
-to run the server 
-python manage.py runserver 
-
 
