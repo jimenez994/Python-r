@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signal App</title>
+</head>
+<body>
+
+<h1>Home</h1>
+
+<a href="/logout">Logout</a>
+
+{{ user.first_name }}
+
+<hr>
+
+<table border=1>
+	<tr>
+		<th>Name</th>
+		<th>Send Message?</th>
+	</tr>
+	{% for user in users %}
+		<tr>
+			<td>{{ user.first_name }} {{ user.last_name }}</td>
+			<td><a href="/message/{{ user.id }}"><button>Send Message</button></a></td>
+		</tr>
+	{% endfor %}
+</table>
+
+<hr>
+
+{% if your_messages|length == 0 %}
+	<p>You have no new messages</p>
+{% else %}
+	<p>You have {{ your_messages|length }} new message(s)</p>
+	<a href="/view_messages"><button>View Messages</button></a>
+{% endif %}
+
+
+</body>
+</html>

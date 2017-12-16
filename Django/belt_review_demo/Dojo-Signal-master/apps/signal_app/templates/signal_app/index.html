@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Signal</title>
+</head>
+<body>
+
+<h1>Signal to Noise ratio, 0:1</h1>
+
+<form action="/register" method="post">
+	{% csrf_token %}
+	First Name: <input type="text" name="first"><br>
+	Last Name: <input type="text" name="last"><br>
+	Email: <input type="text" name="email"><br>
+	Username: <input type="text" name="username"><br>
+	Date of Birth: <input type="date" name="dob"><br>
+	Password: <input type="password" name="password"><br>
+	Confirm Password: <input type="password" name="confirm"><br>
+	<input type="submit" value="Register">
+</form>
+
+<hr>
+
+<form action="/login" method="post">
+	{% csrf_token %}
+	Email: <input type="text" name="email"><br>
+	Password: <input type="password" name="password"><br>
+	<input type="submit" value="Login">
+</form>
+
+{% if messages %}
+	<ul>
+	{% for message in messages %}
+		<li>{{ message }}</li>
+	{% endfor %}
+	</ul>
+{% endif %}
+
+</body>
+</html>

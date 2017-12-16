@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Dojo Signal</title>
+</head>
+<body>
+
+<form action="/add_message/{{id}}" method="post">
+	{% csrf_token %}
+	<textarea name="content" placeholder="Your message..."></textarea>
+	<input type="submit" value="Send Message">
+</form>
+
+{% if messages %}
+	<ul>
+	{% for message in messages %}
+		<li>{{ message }}</li>
+	{% endfor %}
+	</ul>
+{% endif %}
+
+</body>
+</html>
