@@ -7,6 +7,16 @@
     <title>New</title>
 </head>
 <body>
-    <h1>New User add page</h1>
+    <h1>Add a new user</h1>
+    <form action="/create" method="POST">
+             {% csrf_token %}
+            Full Name:<br>
+            <input type="text" name="name"><br><br>
+            Email:<br>
+            <input type="text" name="email"><br><br>
+            <input type="submit" value="Create">
+        </form>
+        <a href="/">Go Back</a>
+
 </body>
 </html>

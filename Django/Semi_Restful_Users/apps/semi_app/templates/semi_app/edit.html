@@ -8,7 +8,18 @@
 </head>
 <body>
     <div>
-        <h1>Edit Page</h1>
+        <h1>Edit User {{users.id}}</h1>
+        
+        <form action="/update/{{users.id}}" method="POST">
+             {% csrf_token %}
+            Full Name:<br>
+            <input type="text" name="name" value='{{users.name}}'><br><br>
+            Email:<br>
+            <input type="text" name="email" value='{{users.email}}'><br><br>
+            <input type="submit" value="Update">
+        </form>
+        <a href="/info/{{users.id}}">Show</a> <a href="/">Go Back</a>
+        
     </div>
 </body>
 </html>

@@ -7,6 +7,12 @@
     <title>Info</title>
 </head>
 <body>
-    <h1>Info Page</h1>
+    <h1>User {{ users.id }}</h1>
+    <P>Full Name: {{users.name}}</P>
+    <P>Email: {{users.email}}</P>
+    <P>Created at: {{users.created_at}}</P>
+    <a href="/edit/{{users.id}}">Edit</a>  <a href="/delete">Delete</a>
+    <a href="/">Back</a>
+
 </body>
 </html>
