@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Course
+from django.contrib import messages
 def index(request):
     courses = Course.objects.all()
-    return render(request,"courses_app/index.html",{"courses": courses})
+    message = messages.warning(request, 'Your account expires in three days.')
+    return render(request,"courses_app/index.html",{"courses": courses,"message":message})
 
 def add(request):
     response = Course.objects.register(

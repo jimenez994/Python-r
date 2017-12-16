@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login and Registration</title>
+</head>
+<body>
+    <div>
+        <div>
+            <h2> Login and Registration</h2>
+            <fieldset>
+                <legend>Register</legend>
+                <form action="/register" method="post">
+                    {% csrf_token %}
+                    <p>First Name:</p><input type="text" name="first">
+                    <p>Last Name:</p><input type="text" name="last">
+                    <p>Date of Birth:</p><input type="date" name="dob"><br>
+                    <p>Username:</p><input type="text" name="username">
+                    <p>Email:</p><input type="text" name="email">
+                    <p>Password:</p><input type="password" name="password">
+                    <p>Password Confirmation:</p><input type="password" name="confirm"><br/>
+                    <input type="submit" name="butoon" value="Resgister">
+                </form>
+            </fieldset>
+        </div>
+        <div>
+            <fieldset>
+                <legend>Login</legend>
+                <form action="/login" method="post">
+                    {% csrf_token %}
+                    <p>Email:</p><input type="text" name="email">
+                    <p>Password:</p><input type="password" name="password"><br>
+                    <input type="submit" name="butoon" value="Login">
+                </form>
+            </fieldset>
+        </div>
+        <div>
+             {% if messages %}
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
