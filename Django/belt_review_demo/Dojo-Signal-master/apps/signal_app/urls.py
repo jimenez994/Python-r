@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^logout$', views.logout),
     url(r'^home$', views.home),
     url(r'^message/(?P<id>\d+)$', views.new_message),
+    url(r'^delete/(?P<id>\d+)$', views.delete),
+    url(r'^add/(?P<id>\d+)$', views.add),
     url(r'^add_message/(?P<id>\d+)$', views.add_message),
     url(r'^view_messages$', views.view_messages)
 ]

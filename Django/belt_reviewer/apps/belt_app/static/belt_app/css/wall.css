@@ -1,0 +1,18 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    background-color: lightslategray;
+    outline: 1px solid black;
+}
+.page{
+    width: 790px;
+    margin: 20px auto;
+}
+.top_left{
+    width: 700px;
+    display: inline-block;
+}
+.top_right{
+    width: 80px;
+    display: inline-block;
+}

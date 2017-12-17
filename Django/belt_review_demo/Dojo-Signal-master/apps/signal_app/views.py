@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User, Message
+from .models import User, Message,Friend
 from django.contrib import messages
 
 def index(request):
@@ -45,13 +45,39 @@ def home(request):
 	if "user_id" not in request.session:
 		return redirect("/")
 
+	usersids = []
+	users = User.objects.all().exclude(id=request.session["user_id"])
+	for user in users:
+		usersids.append(user.id)
+
+	friendsids = []
+	friends = Friend.objects.filter(me=request.session["user_id"])
+	for friend in friends:
+		friendsids.append(friend.friend_with_id)
+	notfriends = set(usersids) - set(friendsids)
+
 	context = {
 		"user": User.objects.get(id=request.session["user_id"]),
 		"users": User.objects.all().exclude(id=request.session["user_id"]),
-		"your_messages": Message.objects.filter(received_by=request.session["user_id"])
+		"your_messages": Message.objects.filter(received_by=request.session["user_id"]),
+
+		"friends": Friend.objects.filter(me=request.session["user_id"]),
+	
+		"notfriends":notfriends
 	}
 
 	return render(request, "signal_app/home.html", context)
+
+def delete(request, id):
+	Friend.objects.get(friend_with_id=id).delete()
+	return redirect("/home")
+
+def add(request, id):
+	Friend.objects.create(
+		friend_with_id=id,
+		me_id=request.session["user_id"]
+		)
+	return redirect("/home")
 
 def new_message(request, id):
 	return render(request, "signal_app/new_message.html", {"id": id})

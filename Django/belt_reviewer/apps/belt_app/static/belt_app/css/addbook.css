@@ -1,0 +1,14 @@
+*{
+    margin: 0px;
+    padding: 0px;
+  
+    /* outline: 1px solid black; */
+}
+.page2{
+    width: 790px;
+    margin: 20px auto;
+}
+.top_right{
+    text-align: right;
+    width: 785px;
+}

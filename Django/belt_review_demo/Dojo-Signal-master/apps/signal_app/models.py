@@ -133,3 +133,10 @@ class Message(models.Model):
 	received_by = models.ForeignKey(User, related_name="received_messages")
 	created_at = models.DateTimeField(auto_now_add=True)
 	objects = MessageManager()
+
+class Friend(models.Model):
+	me = models.ForeignKey(User, related_name="me")
+	friend_with = models.ForeignKey(User, related_name="friend_with")
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(auto_now_add=True)
+

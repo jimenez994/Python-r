@@ -9,7 +9,36 @@
 
 <a href="/logout">Logout</a>
 
-{{ user.first_name }}
+{{ user.first_name }}{{user.id}}
+{% for user in users %}
+
+	{% for friend in friends %}
+			
+		{% if friend.friend_with_id == user.id%}
+			<p><a href="/delete/{{ user.id }}"><button>x</button></a>{{user.first_name}}<a href="/message/{{ user.id }}"><button>Send Message</button></a></p>
+		{% endif %}
+
+	{% endfor %}
+
+{% endfor %}
+
+
+
+
+{% for user in users %}
+
+	{% for friend in notfriends %}
+			
+		{% if friend == user.id%}
+			<p>{{user.first_name}}<a href="/add/{{ user.id }}"><button>ADD</button></a></p>
+		{% endif %}
+
+	{% endfor %}
+
+{% endfor %}
+
+<!-- {{notfriends}} -->
+
 
 <hr>
 
@@ -27,6 +56,7 @@
 </table>
 
 <hr>
+
 
 {% if your_messages|length == 0 %}
 	<p>You have no new messages</p>
