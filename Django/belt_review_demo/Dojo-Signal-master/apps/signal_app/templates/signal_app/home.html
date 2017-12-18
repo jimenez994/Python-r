@@ -10,6 +10,8 @@
 <a href="/logout">Logout</a>
 
 {{ user.first_name }}{{user.id}}
+<hr>
+<h3>Friends</h3>
 {% for user in users %}
 
 	{% for friend in friends %}
@@ -23,8 +25,8 @@
 {% endfor %}
 
 
-
-
+<hr>
+<h3>Users</h3>
 {% for user in users %}
 
 	{% for friend in notfriends %}
@@ -42,7 +44,7 @@
 
 <hr>
 
-<table border=1>
+<!-- <table border=1>
 	<tr>
 		<th>Name</th>
 		<th>Send Message?</th>
@@ -56,7 +58,7 @@
 </table>
 
 <hr>
-
+ -->
 
 {% if your_messages|length == 0 %}
 	<p>You have no new messages</p>
