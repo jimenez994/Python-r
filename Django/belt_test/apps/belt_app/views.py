@@ -19,7 +19,7 @@ def register(request):
     )
     if response["valid"]:
         request.session["user_id"] = response["user"].id
-        return redirect("/home")
+        return redirect("/friends")
     else:
         for error_message in response["errors"]:
             messages.add_message(request, messages.ERROR, error_message)
@@ -33,7 +33,7 @@ def login(request):
     )
     if response["valid"]:
         request.session["user_id"] = response["user"].id
-        return redirect("/home")
+        return redirect("/friends")
     else:
         for error_message in response["errors"]:
             messages.add_message(request, messages.ERROR, error_message)
@@ -45,7 +45,7 @@ def logout(request):
     return redirect("/")
 
 
-def home(request):
+def friends(request):
     if "user_id" not in request.session:
         return redirect("/")
     usersids = []
@@ -72,7 +72,7 @@ def home(request):
     }
     return render(request, "belt_app/home.html", context)
 
-def info(request,id):
+def user(request,id):
     context = {
         "user": User.objects.get(id=id),   
     }
@@ -82,8 +82,13 @@ def add(request,id):
         friend_with_id=id,
         me_id=request.session["user_id"]
     )
-    return redirect("/home")
+    Friend.objects.create(
+        friend_with_id=request.session["user_id"],
+        me_id=id
+    )
+    return redirect("/friends")
 
 def remove(request,id):
     Friend.objects.filter(friend_with_id=id).filter(me_id=request.session["user_id"]).delete()
-    return redirect("/home")
+    Friend.objects.filter(friend_with_id=request.session["user_id"]).filter(me_id=id).delete()
+    return redirect("/friends")

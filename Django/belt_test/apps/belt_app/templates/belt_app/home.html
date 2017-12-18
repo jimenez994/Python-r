@@ -29,7 +29,7 @@
                 <tr>
                     {% if friend.friend_with_id == user.id %}
                     <td>{{ user.first_name }}</td>
-                    <td><a href="/info/{{user.id}}"><button class="view_profile">View Profile</button></a>  <a  href="/remove/{{user.id}}"><button class="remove_profile">Remove as Friend</button> </a></td>
+                    <td><a href="/user/{{user.id}}"><button class="view_profile">View Profile</button></a>  <a  href="/user/{{user.id}}/unfriend"><button class="remove_profile">Remove as Friend</button> </a></td>
                     {% endif %}
                 </tr>
                     {% endfor %}
@@ -52,9 +52,9 @@
                     
                     {% if friend == user.id %}
                     <td>
-                        <a href="/info/{{user.id}}">{{user.first_name}}</a> </td>
+                        <a href="/user/{{user.id}}">{{user.first_name}}</a> </td>
                     <td>
-                        <a href="/add/{{user.id}}"> <button class="add_friend">Add as Friend</button> </a>
+                        <a href="/user/{{user.id}}/friend"> <button class="add_friend">Add as Friend</button> </a>
                     </td>
                     {% endif %}
                 </tr> 
