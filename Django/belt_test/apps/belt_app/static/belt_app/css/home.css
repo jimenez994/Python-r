@@ -1,0 +1,51 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+.page{
+    margin: 20px auto;
+    background-color: rgba(234, 234, 234, .9);
+    width: 850px;
+    height: 667px;
+}
+.view_profile{
+    padding: 3px;
+    background-color: rgb(81, 157, 207);
+    color: white;
+    border-radius: 0px;
+}
+.remove_profile{
+    padding: 3px;
+    background-color: rgb(207, 81, 81);
+    color: white;
+    border-radius: 0px;
+}
+.add_friend{
+    padding: 3px;
+    background-color: rgb(81, 207, 108);
+    color: white;
+    border-radius: 0px;
+}
+.left, .right{
+    padding: 10px;
+    width: 400px;
+    display: inline-block;
+   
+}
+
+.right table{
+    margin-left: 150px;
+}
+.top h1{
+    display: inline-block;
+    width: 770px;
+    color: rgb(84, 87, 86);
+}
+.top a{
+    display: inline-block;
+}
+.top{
+    background-color: rgb(0, 215, 178);
+    /* color: white; */
+    padding: 10px;
+}

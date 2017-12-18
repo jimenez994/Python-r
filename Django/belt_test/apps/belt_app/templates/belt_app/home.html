@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'belt_app/css/home.css' %}" media="screen" title="no title" charset="utf-8">
+    <title>Home</title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="top">
+            <h1>Hello, {{ user.first_name }}!</h1>
+            <a href="/logout">Logout</a>
+        </div>
+    
+        <div class="left">
+            <h3>Here is the list of your friends:</h3>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                {% for user in users %}
+                    {% for friend in friends %}
+                <tr>
+                    {% if friend.friend_with_id == user.id %}
+                    <td>{{ user.first_name }}</td>
+                    <td><a href="/info/{{user.id}}"><button class="view_profile">View Profile</button></a>  <a  href="/remove/{{user.id}}"><button class="remove_profile">Remove as Friend</button> </a></td>
+                    {% endif %}
+                </tr>
+                    {% endfor %}
+                {% endfor %}
+            </table>
+
+            <h3>{{message}}</h3>
+        </div>
+        
+        <div class="right">
+            <h3>Other Users not on your friend's list:</h3>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+                {% for user in users %}
+                    {% for friend in notfriends %}
+                <tr>
+                    
+                    {% if friend == user.id %}
+                    <td>
+                        <a href="/info/{{user.id}}">{{user.first_name}}</a> </td>
+                    <td>
+                        <a href="/add/{{user.id}}"> <button class="add_friend">Add as Friend</button> </a>
+                    </td>
+                    {% endif %}
+                </tr> 
+                    {% endfor %}
+                {% endfor %}
+            </table> 
+        </div>
+      
+        
+    </div>
+</body>
+
+</html>

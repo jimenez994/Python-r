@@ -1,0 +1,56 @@
+*{
+    /* background-color: rgb(0, 134, 249); */
+    color: white;
+    /* outline: 1px solid black; */
+}
+
+.page{
+    margin: 20px auto;
+    background-color: rgba(234, 234, 234, .9);
+    width: 850px;
+    height: 667px;
+    padding: 10px;
+  
+}
+.register{
+    background-color: rgba(52, 69, 75, 0.7);
+    width: 300px;
+    padding: 10px;
+    display: inline-block;
+}
+.login{
+    background-color: rgba(52, 69, 75, 0.7);
+    width: 300px;
+    display: inline-block;
+    vertical-align: top;
+    padding: 10px;
+}
+.input{
+    color: rgba(52, 69, 75, 0.8);
+    
+}
+.btn{
+    margin-top: 10px;
+    background-color: rgba(0, 214, 175, 1);
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 0px;
+}
+#title{
+    color: rgb(89, 94, 93);
+}
+li{
+    color: rgb(173, 10, 10);
+}
+.Mbox{
+    display: inline-block;
+    width: 202px;
+    height: 580px;
+    background-color: rgba(0, 214, 175, 1);
+    vertical-align: top;
+}
+.messages{
+    display: inline-block;
+    color: rgb(173, 10, 10);
+    
+}

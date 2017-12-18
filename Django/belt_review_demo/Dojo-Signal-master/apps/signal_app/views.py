@@ -69,7 +69,7 @@ def home(request):
 	return render(request, "signal_app/home.html", context)
 
 def delete(request, id):
-	Friend.objects.get(friend_with_id=id).delete()
+	Friend.objects.filter(friend_with_id=id).filter(me_id=request.session["user_id"]).delete()
 	return redirect("/home")
 
 def add(request, id):
