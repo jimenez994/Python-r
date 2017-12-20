@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+</head>
+
+<body>
+    <h1>Hello, {{ user.first_name }}</h1>
+    <a href="/logout">Logout</a>
+
+    <table border=1>
+        <tr>
+            <th>Name</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+   
+    <!-- post text area -->
+    <form action="/post/{{user.id}}" method="POST">
+         {% csrf_token %}
+        <textarea name="post_content" id="post_area" cols="80" rows="3"></textarea>
+        <input type="submit" value="Post">
+    </form>
+
+    <!-- Posts -->
+    <hr>
+    {% for user in all_users %}
+        {% for post in posts %}
+            {% if post.post_by_id == user.id %}
+                <hr>
+                 {{ post.content }}<br>
+                 {{ post.created_at }}<br>
+                 {{ user.first_name}}<br>
+                 <form action="/comment/{{user.id}}">
+                     {% csrf_token %}
+                    <textarea name="comment" id="post_area" cols="80" rows="3"></textarea>
+                    <input type="submit" value="Comment">
+                </form>
+                <hr>
+            {% endif %}
+        {% endfor %}  
+    {% endfor %}
+</body>
+
+</html>
