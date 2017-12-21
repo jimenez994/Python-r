@@ -1,0 +1,86 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    /* outline: 1px solid mediumaquamarine; */
+}
+.page{
+    margin: 20px auto;
+
+}
+.top{
+    width: 100%;
+    background-color: rgb(98, 148, 98);
+}
+@media only screen and (max-width: 480px){
+    .middle{
+    width: 100%;
+    background-color: gainsboro;
+    display: inline-block;
+    }
+    .left_side{
+        visibility: hidden;
+        height: 1px;
+    }
+    .right_side{
+        visibility: hidden;
+        height: 1px;
+    }
+
+}
+@media only screen and (min-width: 481px){
+    .middle{
+    width: 69%;
+    background-color: gainsboro;
+    display: inline-block;
+    }
+    .left_side{
+        visibility: hidden;
+        height: 1px;
+    }
+    .right_side{
+        visibility: visible;
+        width: 30%;
+        display: inline-block;
+    }
+}
+@media only screen and (min-width: 1024px){
+    .main{
+        width: 1024px;
+        margin: 1px auto;
+    }
+    .left_side{
+        width: 23%;
+        height: 200px;
+        display: inline-block;
+        vertical-align: top;
+        visibility: visible;
+    }
+    .right_side{
+        width: 23%;
+        display: inline-block;
+        vertical-align: top;
+        visibility: visible;
+    
+    }
+    .middle{
+        width: 53%;
+        background-color: gainsboro;
+        display: inline-block;
+    }
+}
+.profile{
+    height: 200px;
+    background-color: rgb(0, 107, 156);
+}
+.other_users{
+    height: 800px;
+    background-color: rgb(148, 139, 98);
+}
+.right_side{
+    background-color: rgb(148, 98, 148);
+    height: 800px;
+    vertical-align: top;
+}
+button{
+    padding: 3px;
+}

@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^home$', views.home),
     url(r'^logout$', views.logout),
     url(r'^post/(?P<id>\d+)$', views.post),
+    url(r'^comment/(?P<post_id>\d+)$', views.comment),
+    url(r'^request/(?P<id>\d+)$', views.request),
 
 
 ]

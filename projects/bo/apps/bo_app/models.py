@@ -108,6 +108,15 @@ class PostManager(models.Manager):
             return post
         else:
             return "Post cannot be black"
+
+class CommentManager(models.Manager):
+    def commenting(self,comment,comment_by,comment_to):
+        if len(comment) > 0:
+            comment = Comment.objects.create(
+                comment = comment,
+                comment_by_id = comment_by,
+                comment_to_id = comment_to
+            )
             
 
 class User(models.Model):
@@ -123,7 +132,29 @@ class User(models.Model):
 
 class Post(models.Model):
     content = models.TextField(max_length=1000)
-    post_by = models.ForeignKey(User, related_name="post_messages")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
+    post_by = models.ForeignKey(User, related_name="post_messages")
     objects = PostManager()
+
+class Comment(models.Model):
+    comment = models.TextField(max_length=1000)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+    comment_by = models.ForeignKey(User, related_name="user_comment")
+    comment_to = models.ForeignKey(Post, related_name="comment_to")
+    objects = CommentManager()
+
+class Request(models.Model):
+    user_requesting = models.ForeignKey(User, related_name="user_requesting")
+    user_being_requested = models.ForeignKey(User, related_name="user_being_requested")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+class Friend(models.Model):
+    current_user = models.ForeignKey(User, related_name="current_user")
+    friends_with = models.ForeignKey(User, related_name="friends_with")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+

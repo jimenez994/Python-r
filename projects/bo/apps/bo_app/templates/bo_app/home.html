@@ -4,50 +4,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     {% load static %}
+    <link rel="stylesheet" href="{% static 'bo_app/css/home.css' %}" media="screen" title="no title" charset="utf-8">
+ 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Home</title>
 </head>
 
 <body>
-    <h1>Hello, {{ user.first_name }}</h1>
-    <a href="/logout">Logout</a>
+    <div class="page">
+        <div class="top">
+            <h1>Hello, {{ user.first_name }}</h1>
+            <a href="/logout">Logout</a>
+        </div>
 
-    <table border=1>
-        <tr>
-            <th>Name</th>
-        </tr>
-        {% for user in users %}
-        <tr>
-            <td>{{ user.first_name }} {{ user.last_name }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-   
-    <!-- post text area -->
-    <form action="/post/{{user.id}}" method="POST">
-         {% csrf_token %}
-        <textarea name="post_content" id="post_area" cols="80" rows="3"></textarea>
-        <input type="submit" value="Post">
-    </form>
-
-    <!-- Posts -->
-    <hr>
-    {% for user in all_users %}
-        {% for post in posts %}
-            {% if post.post_by_id == user.id %}
-                <hr>
-                 {{ post.content }}<br>
-                 {{ post.created_at }}<br>
-                 {{ user.first_name}}<br>
-                 <form action="/comment/{{user.id}}">
-                     {% csrf_token %}
-                    <textarea name="comment" id="post_area" cols="80" rows="3"></textarea>
-                    <input type="submit" value="Comment">
+        <div class="main">
+                <div class="left_side">
+                <div class="profile">
+                    <p>{{ user.first_name }} {{ user.last_name }}</p>
+                </div>
+            
+                
+                <div class="other_users">
+                    <h4>Other Users</h4>
+                    {% for user in users %}
+                        <p><a href="/profile/{{user.id}}">{{ user.first_name }} {{ user.last_name }}</a><a href="/request/{{user.id}}"><button>Request</button></a> </p>
+                    {% endfor %}
+                </div> 
+            </div>
+            
+                
+            
+            <div class="middle">
+                    <!-- post text area -->
+                <form action="/post/{{user.id}}" method="POST">
+                    {% csrf_token %}
+                    <textarea name="post_content" id="post_area" cols="80" rows="3"></textarea>
+                    <input type="submit" value="Post">
                 </form>
+            
+
+                <!-- Posts -->
+            
                 <hr>
-            {% endif %}
-        {% endfor %}  
-    {% endfor %}
+
+                {% for post in posts %}
+                    {% for user in all_users %}
+                    
+                        {% if post.post_by_id == user.id %}
+                            <hr>
+                            {{ post.content }}<br>
+                            {{ post.created_at }}<br>
+                            <p><a href="/profile/{{user.id}}">{{ user.first_name}}</a></p><br>
+                            {% for comment in comments %}
+                                {% if comment.comment_to_id == post.id %}
+                                    <p> {{ comment.comment }}</p>
+                                {% endif %}
+                            {% endfor %}
+                                <form action="/comment/{{post.id}}" method="POST">
+                                {% csrf_token %}
+                                <textarea name="comment_content" id="post_area" cols="80" rows="3"></textarea>
+                                <input type="submit" value="Comment">
+                            </form>
+                            <hr>
+                            
+                        {% endif %}
+                    {% endfor %}  
+                {% endfor %}
+            </div>
+            <div class="right_side">
+                <div>
+                   
+                {% for user in users %}
+                    {% for request in requests%}
+                        {% if user.id == request.user_requesting_id %}
+                            <p><a href="/profile/{{user.id}}">{{ user.first_name }} {{ user.last_name }}</a><button><a href="/add/{{user.id}}">Add</a></button><button><a href="/delete_request/{{user.id}}">X</a></button></p>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+                </div>
+            </div>
+            
+
+
+
+        </div>  
+    </div>
+        
 </body>
 
 </html>

@@ -52,7 +52,9 @@ def home(request):
         "all_users": User.objects.all(),
         "user": User.objects.get(id=request.session["user_id"]),
         "users": User.objects.all().exclude(id=request.session["user_id"]),
-        "posts": Post.objects.all()
+        "posts": Post.objects.order_by("-created_at").all(),
+        "comments": Comment.objects.all(),
+        "requests": Request.objects.filter(user_being_requested_id=request.session["user_id"]),
     }
     return render(request, "bo_app/home.html", context)
 
@@ -60,5 +62,20 @@ def post(request,id):
     new_post = Post.objects.posting(
     request.POST["post_content"],
     id
+    )
+    return redirect("/home")
+
+def comment(request,post_id):
+    new_comment = Comment.objects.commenting(
+        request.POST["comment_content"],
+        request.session["user_id"],
+        post_id
+    )
+    return redirect("/home")
+
+def request(request,id):
+    Request.objects.create(
+        user_being_requested_id = id,
+        user_requesting_id = request.session["user_id"]
     )
     return redirect("/home")

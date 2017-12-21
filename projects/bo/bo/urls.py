@@ -18,4 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include("apps.bo_app.urls")),
+    url(r'^', include("apps.profile_app.urls")),
 ]
