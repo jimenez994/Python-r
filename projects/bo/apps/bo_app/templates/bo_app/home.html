@@ -16,6 +16,7 @@
         <div class="top">
             <h1>Hello, {{ user.first_name }}</h1>
             <a href="/logout">Logout</a>
+            <a href="/messages"><button>Messages</button></a>
         </div>
 
         <div class="main">
@@ -28,7 +29,11 @@
                 <div class="other_users">
                     <h4>Other Users</h4>
                     {% for user in users %}
-                        <p><a href="/profile/{{user.id}}">{{ user.first_name }} {{ user.last_name }}</a><a href="/request/{{user.id}}"><button>Request</button></a> </p>
+                        {% for friend in notfriends %}
+                            {% if friend == user.id %}
+                              <p><a href="/profile/{{user.id}}">{{ user.first_name }} {{ user.last_name }}</a><a href="/add/{{user.id}}"><button>ADD</button></a> </p>
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
                 </div> 
             </div>
@@ -73,16 +78,13 @@
                 {% endfor %}
             </div>
             <div class="right_side">
-                <div>
-                   
                 {% for user in users %}
-                    {% for request in requests%}
-                        {% if user.id == request.user_requesting_id %}
-                            <p><a href="/profile/{{user.id}}">{{ user.first_name }} {{ user.last_name }}</a><button><a href="/add/{{user.id}}">Add</a></button><button><a href="/delete_request/{{user.id}}">X</a></button></p>
+                    {% for friend in friends %}
+                        {% if friend.friends_with_id == user.id %}
+                            <p><a href="/profile/{{user.id}}">{{ user.first_name }}</a></p>
                         {% endif %}
-                    {% endfor %}
+                    {% endfor %}                
                 {% endfor %}
-                </div>
             </div>
             
 
