@@ -1,0 +1,10 @@
+*{
+    background-color: lightblue;
+}
+img{
+    height: 200px;
+}
+textarea{
+    height: 20px;
+    width: 500px;
+}
