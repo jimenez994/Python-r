@@ -12,6 +12,9 @@
 </head>
 
 <body>
+     {% load static %}
+    <img src="{% static 'dragonBall.jpg' %}" alt="dragonball">
+    
     <div class="page">
         <div class="top">
             <h1>Hello, {{ user.first_name }}</h1>
@@ -59,6 +62,7 @@
                     
                         {% if post.post_by_id == user.id %}
                             <hr>
+                            
                             {{ post.content }}<br>
                             {{ post.created_at }}<br>
                             <p><a href="/profile/{{user.id}}">{{ user.first_name}}</a></p><br>
