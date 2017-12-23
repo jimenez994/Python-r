@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'apps.espn_app',
     'apps.profile_app',
     'apps.bo_app',
     'django.contrib.admin',

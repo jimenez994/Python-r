@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
+import os
 
 
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
@@ -15,6 +16,7 @@ def upload(request):
         if form.is_valid():
             post = form.save()
             post.image = request.FILES['image']
+            
             file_type = post.image.url.split('.')[-1]
             file_type = file_type.lower()
             if file_type not in IMAGE_FILE_TYPES:

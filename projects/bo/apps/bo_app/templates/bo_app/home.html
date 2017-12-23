@@ -12,15 +12,12 @@
 </head>
 
 <body>
-     {% load static %}
-    <img src="{% static 'dragonBall.jpg' %}" alt="dragonball">
     
     <div class="page">
         <div class="top">
             <h1>Hello, {{ user.first_name }}</h1>
             <a href="/logout">Logout</a>
             <a href="/messages"><button>Messages</button></a>
-            <a href="/espn"><button>SHOWOFF</button></a>
         </div>
 
         <div class="main">
