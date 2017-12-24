@@ -59,6 +59,7 @@ def home(request):
 	context = {
 		"user": User.objects.get(id=request.session["user_id"]),
 		"users": User.objects.all().exclude(id=request.session["user_id"]).order_by("first_name"),
+		
 		"your_messages": Message.objects.filter(received_by=request.session["user_id"]),
 
 		"friends": Friend.objects.filter(me=request.session["user_id"]),
@@ -97,5 +98,5 @@ def add_message(request, id):
 def view_messages(request):
 	your_messages = Message.objects.filter(received_by=request.session["user_id"])
 	store = [message for message in your_messages]
-	Message.objects.filter(received_by=request.session["user_id"]).delete()
+	
 	return render(request, "signal_app/messages.html" ,{"your_messages": store})

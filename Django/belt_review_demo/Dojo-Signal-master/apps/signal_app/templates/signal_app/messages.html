@@ -10,6 +10,15 @@
 <h3 id="time"></h3>
 
 <hr>
+{% for messages in your_messages %}
+<button>
+	<a href="/messages/messages.sent_by.id"> {{ messages.sent_by.username }}</a>
+</button>
+
+<p>
+	<pre>{{ messages.content }}</pre>
+</p>
+<hr> {% endfor %}
 
 {% for message in your_messages %}
 	<p><strong>{{ message.sent_by.username }} says:</strong> ({{ message.created_at }})</p>
@@ -17,20 +26,7 @@
 	<hr>
 {% endfor %}
 
-<script type="text/javascript">
-	var time = 5;
-	document.getElementById("time").innerHTML = `${time} seconds remaining`;
 
-	setInterval(countdown, 1000);
-
-	function countdown(){
-		time--;
-		document.getElementById("time").innerHTML = `${time} seconds remaining`;
-		if(time == 0){
-			window.location = "/home";
-		}
-	}
-</script>
 
 </body>
 </html>
