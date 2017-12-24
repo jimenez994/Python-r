@@ -55,8 +55,11 @@
                     
                         {% if post.post_by_id == user.id %}
                             <hr>
-                            
                             {{ post.content }}<br>
+                            {% if post.image.url != null%}
+                             <a href="{{ post.image.url }}"><img src="{{ post.image.url }}" alt="image "></a><br>
+                            {% endif %}
+                            
                             {{ post.created_at }}<br>
                             <p><a href="/profile/{{user.id}}">{{ user.first_name}}</a></p><br>
                             {% for comment in comments %}

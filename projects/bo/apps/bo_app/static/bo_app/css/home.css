@@ -17,6 +17,9 @@
     background-color: gainsboro;
     display: inline-block;
     }
+    img{
+        height: 200px;
+    }
     .left_side{
         visibility: hidden;
         height: 1px;
@@ -33,6 +36,9 @@
     background-color: gainsboro;
     display: inline-block;
     }
+    img{
+        height: 200px;
+    }
     .left_side{
         visibility: hidden;
         height: 1px;
@@ -47,6 +53,9 @@
     .main{
         width: 1024px;
         margin: 1px auto;
+    }
+    img{
+        height: 200px;
     }
     .left_side{
         width: 23%;
