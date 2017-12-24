@@ -1,6 +1,10 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from django.contrib import messages
+import os
+from .forms import *
+
+IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 
 def index(request):
@@ -75,12 +79,40 @@ def home(request):
     }
     return render(request, "bo_app/home.html", context)
 
-def post(request,id):
-    new_post = Post.objects.posting(
-    request.POST["post_content"],
-    id
-    )
-    return redirect("/home")
+def upload(request,id):
+    form = postForm(request.POST or None, request.FILES or None)
+    user = get_object_or_404(User, pk=id)
+    if request.FILES.get('image') != None:
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.post_by = user
+            post.image = request.FILES['image']
+
+            file_type = post.image.url.split('.')[-1]
+            file_type = file_type.lower()
+            if file_type not in IMAGE_FILE_TYPES:
+                context = {
+                    'form': form,
+                    'error_message': 'image must me jpg'
+                }
+                return render(request, 'bo_app/home.html', context)
+            post.save()
+            return redirect("/home")
+    else:
+        if form.is_valid():
+            
+            post= form.save(commit=False)
+            post.post_by = user
+            post.save()
+            return redirect("/home")
+        else:
+            form = postForm()
+        return render(request, 'bo_app/upload.html', {'form': form})
+
+
+
+
+
 
 def comment(request,post_id):
     new_comment = Comment.objects.commenting(
@@ -89,6 +121,8 @@ def comment(request,post_id):
         post_id
     )
     return redirect("/home")
+
+
 
 def add(request,id):
     Friend.objects.create(

@@ -43,11 +43,7 @@
             
             <div class="middle">
                     <!-- post text area -->
-                <form action="/post/{{user.id}}" method="POST">
-                    {% csrf_token %}
-                    <textarea name="post_content" id="post_area" cols="80" rows="3"></textarea>
-                    <input type="submit" value="Post">
-                </form>
+                <h1><a href="/upload/{{user.id}}"><button>POST</button></a></h1>
             
 
                 <!-- Posts -->

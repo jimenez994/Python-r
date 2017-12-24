@@ -98,17 +98,6 @@ class UserManager(models.Manager):
 
 		return response
 
-class PostManager(models.Manager):
-    def posting(self,content,post_by):
-        if len(content) > 0:
-            post = Post.objects.create(
-                content = content,
-                post_by_id = post_by
-            )
-            return post
-        else:
-            return "Post cannot be black"
-
 class CommentManager(models.Manager):
     def commenting(self,comment,comment_by,comment_to):
         if len(comment) > 0:
@@ -132,17 +121,18 @@ class User(models.Model):
 
 class Post(models.Model):
     content = models.TextField(max_length=1000)
+    image = models.FileField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    post_by = models.ForeignKey(User, related_name="post_messages")
-    objects = PostManager()
+    post_by = models.ForeignKey(User, on_delete=models.CASCADE)
+
 
 class Comment(models.Model):
     comment = models.TextField(max_length=1000)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now_add=True)
-    comment_by = models.ForeignKey(User, related_name="user_comment")
-    comment_to = models.ForeignKey(Post, related_name="comment_to")
+    comment_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    comment_to = models.ForeignKey(Post, on_delete=models.CASCADE)
     objects = CommentManager()
 
 class Request(models.Model):
