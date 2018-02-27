@@ -7,12 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Testing </h1>
-    <h2>First TRY!!!</h2>
+    <h3>Login:</h3>
     <form action="/login" method="POST">
          {% csrf_token %}
         <input type="text" name="username">
-        <input type="submit" value="Create">
+        <input type="submit" value="Login">
     </form>
     <a href="/dashboard">dashboard</a>
 </body>

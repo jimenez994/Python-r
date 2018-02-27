@@ -8,6 +8,29 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>this is a dashboard</h1>
+     <h2>Welcome, {{ currentUser.username}}</h2>
+    <a href="/logout">logout</a>
+    <form action="/post" method="POST">
+         {% csrf_token %}
+        <textarea name="post"  cols="30" rows="3" ></textarea>
+        <input type="submit" value="Post">
+    </form>
+    
+    <div>
+        {% for post in posts %}
+            <h4> {{post.content}} </h4>
+            <small>{{post.post_by.username}}</small>
+            {%for comment in post.comments.all%}
+            <p>{{comment.content}}</p>
+            <small>{{comment.comment_by.username}}</small>
+            {% endfor %}
+            <form action="/comment/{{post.id}}" method="POST">
+                 {% csrf_token %}
+                <input type="text" name="comment">
+                <input type="submit" value="Comment">
+            </form>
+        {% endfor %}
+    </div>
+   
 </body>
 </html>
