@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+</head>
+<body>
+    <h2>New User</h2>
+    <form class="ajax_form" id="create_user_ajax_form" action="/create" method="POST">
+        {% csrf_token %}
+        <label> Email: </label>
+        <input type="email" name="email">
+        <br>
+        <label> First Name: </label>
+        <input type="text" name="first_name">
+        <br>
+        <label> Last Name: </label>
+        <input type="text" name="last_name">
+        <br>
+        <input type="submit" value="create user">
+    </form>
+
+    <div id="placeholder3">placeholder3</div>
+    <script>
+        $('#create_user_ajax_form').submit(function (e) {
+            e.preventDefault()
+             $.ajax({
+                url: $(this).attr('action'), // or '/create' 
+                method: 'post',
+                data: $(this).serialize(),
+                success: function (serverResponse) {
+                    console.log(serverResponse)
+                    $('#placeholder3').html(serverResponse)
+                }
+            })
+        })
+    </script>
+
+    <hr>
+    <button id="button_json">Fetch HttpResponse from user_login/all.json</button>
+    <button id="button_html">Fetch HttpResponse from user_login/all.html</button>
+    <div id="placeholder1">placeholder for Ajax content</div>
+
+    <script>
+        $('#button_json').click(function() {
+            $.ajax({
+                url: "/all.json",
+                success: function (serverResponse) {
+                    $('#placeholder1').html(JSON.stringify(serverResponse))
+                }
+            })
+        });
+        $('#button_html').click(function () {
+                $.ajax({
+                url: "/all.html",
+                success: function (serverResponse) {
+                    $('#placeholder1').html(serverResponse)
+                }
+            })
+        })
+    </script>
+
+    <h2>Search</h2>
+    <form action="/find" method="post" >
+         {% csrf_token %}
+        find all user whose first name start width
+        <input id="ajax_first_name" type="text" name="first_name_starts_with">
+    </form>
+    <div id="placeholder2">placeholder 2</div>
+    <script>
+        $('#ajax_first_name').keyup(function () {
+            console.log("parent serialize() return" , $(this).parent().serialize() )
+            $.ajax({
+                url: '/find',
+                method: 'post',
+                data: $(this).parent().serialize(),
+                success: function (serverResponse) {
+                    console.log(serverResponse)
+                    $('#placeholder2').html(serverResponse)
+                }
+            })
+        })
+    </script>
+    
+</body>
+</html>

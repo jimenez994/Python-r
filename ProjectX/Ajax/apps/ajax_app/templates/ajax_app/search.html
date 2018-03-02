@@ -1,0 +1,36 @@
+<p>
+    {% for page in pages %}
+    <a href='/search/{{page}}' class='not_link' id='{{ page }}'>{{ page }}</a>
+    {% endfor %}
+</p>
+
+<table>
+    <tr>
+        <th>leads_id</th>
+        <th>first name</th>
+        <th>last name</th>
+        <th>registered date</th>
+        <th>email</th>
+    </tr>
+    {% for user in users2 %}
+    <tr>
+        <td>{{ user.id }}</td>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.created_at }}</td>
+        <td>{{ user.email }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<script>
+    $(document).ready(function () {
+        $(".not_link").click(function (event) {
+            event.preventDefault();
+            var a = $(this).attr('id')
+            $.post('/search/' + a, $('form').serialize(), function (res) {
+                $('#leads').html(res);
+            })
+        });
+    })
+</script>
