@@ -80,16 +80,13 @@
                 }
             })
         })
-        $(document).ready(function () {
-            $(".not_link").click(function (event) {
-                event.preventDefault();
-                var a = $(this).attr('id')
-                $.post('/search/' + a, $('form').serialize(), function (res) {
-                    $('#leads').html(res);
-                })
-            });
-        })
-
+        $(".not_link").click(function (event) {
+            event.preventDefault();
+            var a = $(this).attr('id')
+            $.post('/search/' + a, $('form').serialize(), function (res) {
+                $('#leads').html(res);
+            })
+        });
     </script>
 </body>
 </html>
