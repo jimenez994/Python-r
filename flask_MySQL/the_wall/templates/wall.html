@@ -25,12 +25,12 @@
         <div class="posts">
             {% for message in messages %}
                 
-                <h3 class="message">  {{message["message"]}}</h3>
+                <h3 class="message">  {{message["post"]}}</h3>
                 <p class="user_m">{{message["user"]}}</p>
                 
                 <ul>
                 {% for comment in comments %}
-                    {% if comment["message_id"] == message["message_id"] %}
+                    {% if comment["post_id"] == message["post_id"] %}
                     
                     <p class="comment">{{comment["comment"]}}</p>
                         <p class="user_c">{{comment["user"]}}</p>
@@ -41,7 +41,7 @@
                 <form action="/comment" method="POST">
                     <br/>
                     <input class="comment_area" type="text" name="comment" value="">
-                    <input type="hidden" name="message_id" value="{{ message['message_id'] }}">
+                    <input type="hidden" name="message_id" value="{{ message['post_id'] }}">
                     <br/>
 
                     <input class="butn" type="submit" name="button" value="Comment">

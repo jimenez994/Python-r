@@ -45,7 +45,7 @@ def register():
 		errors.append("Password MUST match confirmed password")
 
 	if errors == []:
-		query = "INSERT INTO users (first_name, last_name, email, password, created_at, updated_at) VALUES (:first, :last, :email, :password, NOW(), NOW())"
+		query = "INSERT INTO User (first_name, last_name, email, password, created_at, updated_at) VALUES (:first, :last, :email, :password, NOW(), NOW())"
 		data = {
 			'first' : request.form['first'],
 			'last' : request.form['last'],
@@ -76,7 +76,7 @@ def login():
     elif len(request.form['password']) < 8: 
 	    errors.append("Password MUST be longer than 7 characters")
 	
-    query = "SELECT * FROM users WHERE email = '{}'".format(request.form['email'])
+    query = "SELECT * FROM User WHERE email = '{}'".format(request.form['email'])
     resultSet = mysql.query_db(query)
 
     if len(resultSet) < 1:
@@ -102,9 +102,9 @@ def post():
         return redirect("/success")
     else:
         data = {
-            "message": request.form["comment_field"]
+            "content": request.form["comment_field"]
         }
-        query = "INSERT INTO `the_wall`.`messages` (`message`, `created_at`, `updated_at`, `user_id`) VALUES (:message, NOW(), NOW(), {})".format(session["user_id"])
+        query = "INSERT INTO `the_wall`.`Post` (`content`, `created_at`, `updated_at`, `User_id`) VALUES (:content, NOW(), NOW(), {})".format(session["user_id"])
         mysql.query_db(query,data)
         return redirect("/success")
 @app.route("/comment", methods=["POST"])
@@ -113,14 +113,12 @@ def comment():
     print len(request.form["comment"])
     print request.form["message_id"]
    
-    query = "INSERT INTO comments (comment, created_at, updated_at, message_id, user_id) VALUES (:comment, NOW(), NOW(), :message_id, :user_id)"
+    query = "INSERT INTO Comment (content, created_at, updated_at, Post_id, User_id) VALUES (:content, NOW(), NOW(), :Post_id, :User_id)"
     data = {
-            'comment' : request.form['comment'],
-            'message_id' : request.form['message_id'],
-            'user_id' : session['user_id']
+            'content' : request.form['comment'],
+            'Post_id' : request.form['message_id'],
+            'User_id' : session['user_id']
     }
-  
-       
     mysql.query_db(query,data)
     #     print request.form["comment"]
     #     return redirect("/success")
@@ -131,8 +129,8 @@ def success():
         flash("you have to login first")
         return redirect("/")
 
-    messages = mysql.query_db("SELECT messages.message AS message, messages.id AS message_id, messages.created_at AS message_time, users.first_name AS user FROM messages JOIN users ON users.id = messages.user_id ORDER BY messages.created_at desc")
-    comments = mysql.query_db("SELECT comments.comment AS comment, comments.created_at AS comment_time,comments.user_id, users.first_name AS user, messages.id AS message_id FROM comments JOIN messages ON messages.id = comments.message_id JOIN users ON users.id = comments.user_id ORDER BY comment_time DESC")
+    messages = mysql.query_db("SELECT Post.content AS post, Post.id AS post_id, Post.created_at AS post_creates, User.first_name AS user FROM Post JOIN User ON User.id = Post.User_id ORDER BY Post.created_at desc")
+    comments = mysql.query_db("SELECT Comment.content AS comment, Comment.created_at AS comment_time,Comment.User_id, User.first_name AS user, Post.id AS post_id FROM Comment JOIN Post ON Post.id = Comment.Post_id JOIN User ON User.id = Comment.User_id ORDER BY comment_time DESC")
     
     print comments
     
