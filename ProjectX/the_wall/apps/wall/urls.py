@@ -7,8 +7,5 @@ urlpatterns = [
     url(r'^logout$', views.logout),
     url(r'^post$', views.post),
     url(r'^comment/(?P<post_id>\d+)$', views.comment),
-    
-    
-    
 ]
 
