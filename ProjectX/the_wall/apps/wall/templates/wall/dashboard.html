@@ -15,7 +15,7 @@
         <textarea name="post"  cols="30" rows="3" ></textarea>
         <input type="submit" value="Post">
     </form>
-    
+    {% post.comments.all %}
     <div>
         {% for post in posts %}
             <h4> {{post.content}} </h4>

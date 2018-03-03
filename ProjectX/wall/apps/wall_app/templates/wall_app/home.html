@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <h2>Welcome, {{ currentUser.username}}</h2>
+    <a href="/logout">logout</a>
+    <form action="/post" method="POST">
+        {% csrf_token %}
+        <textarea name="post" cols="30" rows="3"></textarea>
+        <input type="submit" value="Post">
+    </form>
+
+    <div>
+        {% for post in posts %}
+        <h4> {{post.content}} </h4>
+        <small>{{post.post_by.username}}</small>
+        {%for comment in post.comments.all%}
+        <p>{{comment.comment}}</p>
+        <small>{{comment.comment_by.username}}</small>
+        {% endfor %}
+        <form action="/comment/{{post.id}}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="comment">
+            <input type="submit" value="Comment">
+        </form>
+        {% endfor %}
+    </div>
+
+</body>
+
+</html>
