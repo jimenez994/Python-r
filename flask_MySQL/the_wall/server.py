@@ -131,9 +131,7 @@ def success():
 
     messages = mysql.query_db("SELECT Post.content AS post, Post.id AS post_id, Post.created_at AS post_creates, User.first_name AS user FROM Post JOIN User ON User.id = Post.User_id ORDER BY Post.created_at desc")
     comments = mysql.query_db("SELECT Comment.content AS comment, Comment.created_at AS comment_time,Comment.User_id, User.first_name AS user, Post.id AS post_id FROM Comment JOIN Post ON Post.id = Comment.Post_id JOIN User ON User.id = Comment.User_id ORDER BY comment_time DESC")
-    
-    print comments
-    
+        
     print comment
     return render_template("wall.html",messages=messages,comments=comments)
 
