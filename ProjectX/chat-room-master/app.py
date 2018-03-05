@@ -171,7 +171,6 @@ def send_inquiry(msg):
     }
     emit('getInquiry', data, room=msg['room'])
 
-
 @app.route('/croppic', methods=['GET', 'POST'])
 def croppic():
     user_id = session.get('user_id')
