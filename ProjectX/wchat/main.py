@@ -1,28 +1,102 @@
-from flask import Flask, render_template
+from flask import Flask, session, redirect, render_template, request, flash , url_for
 from flask_socketio import SocketIO, send
+from flask_login import UserMixin, LoginManager, login_required, current_user, login_user, logout_user
 from mysqlconnection import MySQLConnector
-
-
+import bcrypt
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = 'this_is_a_secret_ket'
-mysql = MySQLConnector(app, "wchat")
+mysql = MySQLConnector(app, "zchat")
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 socketio = SocketIO(app)
+class User(UserMixin):
+    pass
+
+def query_user(username):
+    query = "SELECT * FROM User WHERE username = '{}'".format(username)
+    resultSet = mysql.query_db(query)
+    if len(resultSet) < 1:
+        return False
+    return True
+
+@login_manager.user_loader
+def user_loader(username):
+    if query_user(username):
+        user = User()
+        user.id = username
+        return user
+    return None
+
+@app.route('/')
+def check():
+    if session.get('user_id') == None:
+        return redirect('/login')
+    return redirect('/dashboard')
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    user_id = session.get('user_id')
+
+    if request.method == 'GET':
+        return render_template("login.html")
+
+    query = "SELECT * FROM User WHERE username = '{}'".format(
+        request.form['username'])
+    resultSet = mysql.query_db(query)
+    if len(resultSet) < 1:
+        return redirect("/login")
+    if bcrypt.checkpw(request.form['password'].encode(), resultSet[0]['password'].encode()):
+        user = User()
+        user.id = request.form['username']
+        login_user(user, remember=True)
+        flash('Logged in successfully')
+        return redirect(url_for('index'))
+    return redirect("/login")
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        return render_template("register.html")
+    query = "INSERT INTO User (username, password, img, created_at, updated_at) VALUES (:username, :password, :img, NOW(), NOW())"
+    data = {
+        'username': request.form['username'],
+        'password': bcrypt.hashpw(request.form['password'].encode(), bcrypt.gensalt()),
+        'img': 'default.png'
+    }
+    mysql.query_db(query, data)
+    return redirect(url_for("index"))
 
 @socketio.on('message')
 def handleMessage(msg):
-    print('Message:' + msg)
-
-    query = "INSERT INTO History (message, created_at, updated_at) VALUES (:message, NOW(), NOW())"
-    data = {
+    print '*************************!'
+    print session.get('user_id')
+    print '*************************!'
+    
+    user_id = session.get('user_id')
+    # 
+    query = "INSERT INTO History (message, created_at, updated_at, User_id) VALUES (:message, NOW(), NOW(), :User_id)"
+    data_message = {
         'message': msg,
-    } 
-    mysql.query_db(query, data)
-    send(msg, broadcast= True)
+        'User_id': 1,
+    }
+    mysql.query_db(query, data_message)
+    # 
+    user = mysql.query_db(
+        "SELECT * FROM User WHERE username = '{}'".format(user_id))
+    data = {
+        'time': user[0]['created_at'],
+        'Name': user_id,
+        'PictureUrl': user[0]['img'],
+        'msg': msg
+    }
+    send(data, broadcast= True)
 
-@app.route('/')
+@app.route('/dashboard')
 def index():
+    print session.get('user_id')
     messages = mysql.query_db("SELECT History.message AS message, History.created_at AS created_time FROM History")
 
     return render_template('index.html', messages= messages)

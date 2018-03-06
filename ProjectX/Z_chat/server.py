@@ -1,9 +1,10 @@
 from flask import Flask, session, redirect, render_template, request, flash , url_for
-from flask_socketio import SocketIO, emit, join_room
+from flask_socketio import SocketIO, send
 from flask_login import UserMixin, LoginManager, login_required, current_user, login_user, logout_user
 from mysqlconnection import MySQLConnector
 import os
 import bcrypt
+import io
 
 MugShot_PATH = 'static/mugshot'
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -16,7 +17,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 socketio = SocketIO(app)
-async_mode = "eventlet"
 
 class User(UserMixin):
     pass
@@ -84,17 +84,10 @@ def logout():
     return redirect(url_for('login'))
 app.run(debug=True)
 
-@socketio.on('join')
-def join(message):
-    join_room(message['room'])
-    print('join')
 
-@socketio.on('connect')
-def test_connect():
-    print('connect')
 
-@socketio.on('sendInquiry')
-def send_inquiry(msg):
+@socketio.on('message')
+def handleMessage(msg):
     user_id = session.get('user_id')
     if msg['msg'] != '':
         query = "INSERT INTO History (message, created _at, updated_at, User_id) VALUES (:message, NOW(), NOW(), :User_id)"
@@ -110,5 +103,9 @@ def send_inquiry(msg):
         'PictureUrl': user[0]['img'],
         'msg': msg['msg']
     }
-    emit('getInquiry', data, room=msg['room'])
+    send(data, broadcast = True)
+
+
+if __name__ == '__main__':
+    socketio.run(app)
 
