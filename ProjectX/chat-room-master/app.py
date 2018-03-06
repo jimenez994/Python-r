@@ -5,14 +5,9 @@ from dbModel import UserAccounts, Message, db
 from functools import wraps
 from PIL import Image
 from datetime import datetime
-import base64
 import os
 import uuid
 import io
-
-MugShot_PATH = 'static/mugshot'
-APP_ROOT = os.path.dirname(os.path.abspath(__file__))
-MugShot_FOLDER = os.path.join(APP_ROOT, MugShot_PATH)
 
 app = Flask(__name__)
 app.secret_key = 'super secret string'  # Change this!
@@ -170,96 +165,6 @@ def send_inquiry(msg):
         'msg': msg['msg'],
     }
     emit('getInquiry', data, room=msg['room'])
-
-@app.route('/croppic', methods=['GET', 'POST'])
-def croppic():
-    user_id = session.get('user_id')
-    try:
-        
-        # imgUrl 		// your image path (the one we recieved after successfull upload)
-        img_url = request.form['imgUrl']
-        # imgInitW  	// your image original width (the one we recieved after upload)
-        # img_init_w = request.form['imgInitW']
-        # imgInitH 	    // your image original height (the one we recieved after upload)
-        # img_init_h = request.form['imgInitH']
-        # imgW 		    // your new scaled image width
-        img_w = request.form['imgW']
-        # imgH 		    // your new scaled image height
-        img_h = request.form['imgH']
-        # imgX1 		// top left corner of the cropped image in relation to scaled image
-        img_x1 = request.form['imgX1']
-        # imgY1 		// top left corner of the cropped image in relation to scaled image
-        img_y1 = request.form['imgY1']
-        # cropW 		// cropped image width
-        crop_w = request.form['cropW']
-        # cropH 		// cropped image height
-        crop_h = request.form['cropH']
-        angle = request.form['rotation']
-
-        # original size
-        # imgInitW, imgInitH = int(img_init_w), int(img_init_h)
-
-        # Adjusted size
-        img_w, img_h = int(float(img_w)), int(float(img_h))
-        img_y1, img_x1 = int(float(img_y1)), int(float(img_x1))
-        crop_w, crop_h = int(float(crop_w)), int(float(crop_h))
-        angle = int(angle)
-
-        # image_format = imgUrl.split(';base64,')[0].split('/')[1]
-        # title_head = img_url.split(',')[0]
-        img_data = img_url.split('base64,')[1]
-        img_data = base64.b64decode(img_data)
-
-        source_image = Image.open(io.BytesIO(img_data))
-        image_format = source_image.format.lower()
-        # create new crop image
-        source_image = source_image.resize((img_w, img_h), Image.ANTIALIAS)
-
-        rotated_image = source_image.rotate(-float(angle), Image.BICUBIC)
-        rotated_width, rotated_height = rotated_image.size
-        dx = rotated_width - img_w
-        dy = rotated_height - img_h
-        cropped_rotated_image = Image.new('RGBA', (img_w, img_h))
-        cropped_rotated_image.paste(rotated_image.crop((dx / 2, dy / 2, dx / 2 + img_w, dy / 2 + img_h)),
-                                    (0, 0, img_w, img_h))
-
-        final_image = Image.new('RGBA', (crop_w, crop_h), 0)
-        final_image.paste(cropped_rotated_image.crop((img_x1, img_y1, img_x1 + crop_w, img_y1 + crop_h)),
-                          (0, 0, crop_w, crop_h))
-
-        uuid_name = str(uuid.uuid1())
-        mugshot = '{}.{}'.format(uuid_name, image_format)
-        user_mugshot = UserAccounts.query.filter_by(UserName=user_id).first()
-        if user_mugshot.MugShot != "default.jpg":
-            delete_filename = '{}/{}'.format(MugShot_FOLDER, user_mugshot.MugShot)
-            os.remove(delete_filename)
-
-        user_mugshot.MugShot = mugshot
-        db.session.commit()
-        save_path = '{}/{}'.format(MugShot_FOLDER, mugshot)
-        final_image.save(save_path)
-
-        #  The crop rectangle, as a (left, upper, right, lower)-tuple.
-        # box = (imgX1, imgY1, imgX1 + cropW, imgY1 + cropH)
-        # newImg = source_image.crop(box)
-        # imgByteArr = io.BytesIO()
-        # newImg.save(imgByteArr, format=image_format)
-        # imgByteArr = imgByteArr.getvalue()
-        # imgbase = base64.b64encode(imgByteArr).decode('utf-8')
-        # img_base64 = '{},{}'.format(title_head, imgbase)
-
-        data = {
-            'status': 'success',
-            'url': '/{}/{}'.format(MugShot_PATH, mugshot),
-            'filename': mugshot
-        }
-        return json.dumps(data)
-    except Exception as e:
-        return {
-            'status': 'error',
-            'message': str(e),
-        }
-
 
 if __name__ == '__main__':
     socketio.run(app)

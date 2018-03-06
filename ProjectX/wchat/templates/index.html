@@ -15,24 +15,51 @@
             <li>{{msg.message}}</li>
         {% endfor %}
     </ul>
-    <input type="text" id="myMessage">
-    <button id="sendbutton"> send</button>
+    <input type="text" class="message-input">
+    <button class="message-submit"> send</button>
 
     <script type="text/javascript">
         var socket = io.connect('http://127.0.0.1:5000');
 
         socket.on('connect', function () {
-            socket.send('User has connected!');
+            //console.log('connected!');
+            socket.emit('join', { room: 'A_Room' });
+        });
+        function setDate(time) {
+            $('<div class="timestamp">' + time + '</div>').appendTo($('.message:last'));
+        }
+        function insertMessage() {
+            //console.log('insertMessage');
+            var msg = $('.message-input').val();
+            if ($.trim(msg) == '') {
+                return false;
+            }
+            //console.log('send Inqueiry');
+            var obj = {
+                msg: msg,
+                room: 'A_Room'
+            };
+            socket.emit('sendInquiry', obj);
+        }
+
+        socket.on('getInquiry', function (msg) {
+            //console.log(msg.msg);
+            $('<div class="message new"><figure class="avatar"><img src="/static/mugshot/' + msg.PictureUrl + '" /></figure>' + msg.msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
+            setDate(msg.time);
+            $('.message-input').val(null);
+            updateScrollbar();
         });
 
-        socket.on('message', function (msg) {
-            $('#message').append('<li>' +msg+ '</li>');
-            console.log('got message')
+
+        $('.message-submit').click(function () {
+            insertMessage();
         });
 
-        $('#sendbutton').on('click', function () {
-            socket.send($('#myMessage').val());
-            $('#myMessage').val('');
+        $(window).on('keydown', function (e) {
+            if (e.which == 13) {
+                insertMessage();
+                return false;
+            }
         });
        
     </script>

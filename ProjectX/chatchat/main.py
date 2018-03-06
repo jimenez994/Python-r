@@ -71,7 +71,7 @@ def login():
         errors.append("the username does not exists")
     else:
         if bcrypt.checkpw(request.form["password"].encode(), resultSet[0]['password'].encode()):
-            session.add("user_id") = resultSet[0]['id']
+            session['user_id'] = resultSet[0]['id']
             return redirect("/dashboard")
         else: 
             errors.append('password is incorrect')
@@ -96,7 +96,8 @@ def logout():
 
 @socketio.on('message')
 def handleMessage(msg):
-    user_id = session.get("user_id")
+    print session.get("user_id")
+    user_id = 1
     query = "INSERT INTO History (message, created_at, updated_at, User_id) VALUES (:message, NOW() , NOW(),:User_id)"
     data = {
         'message': msg,

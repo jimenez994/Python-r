@@ -88,7 +88,11 @@ app.run(debug=True)
 
 @socketio.on('message')
 def handleMessage(msg):
-    user_id = session.get('user_id')
+    print "**********************"
+    print session.get('user_id')
+    print "**********************"
+
+    user_id = session.get('user_id') 
     if msg['msg'] != '':
         query = "INSERT INTO History (message, created _at, updated_at, User_id) VALUES (:message, NOW(), NOW(), :User_id)"
         data_message = {
