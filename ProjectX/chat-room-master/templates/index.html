@@ -12,39 +12,21 @@
 		<figure class="avatar">
 		  <img src="static/mugshot/{{ mug_shot_title }}" />
 		</figure>
-        <i class="fa fa-cog" aria-hidden="false" onclick="CroppicEvent()">frwgw</i>
       </div>
 
-	  <div class="messages">
-		<div class="messages-content">
+        <div class="messages-content">
             {% for data in messages_list %}
                 <div class="message new"><figure class="avatar"><img src="static/mugshot/{{ data.MugShot }}"   alt="{{ data.UserName }}" title="{{ data.UserName }}"></figure>{{ data.Messages }}<div class="timestamp">{{ data.CreateDate }}</div></div>
             {% endfor %}
         </div>
-	  </div>
+	
 	  <div class="message-box">
 		<textarea type="text" class="message-input" placeholder="Type message..."></textarea>
 		<button type="submit" class="message-submit">Send</button>
 	  </div>
 	</div>
-	<div class="bg"></div>
-    <div class="container">
-        <!-- Croppic Modal -->
-        <div class="modal fade" id="CroppicModal" role="dialog">
-            <div class="modal-dialog">
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <a href="/logout">logout</a>
-                    </div>
-                    <div class="modal-body">
-                        <div style="margin: auto" id="imgID"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <a href="/logout">logout</a>
+   
 	<script src='{{ url_for('static', filename='javascripts/jquery.min.js')}}'></script>
     <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.2/socket.io.min.js'></script>
 	<script src="{{ url_for('static', filename='javascripts/index.js')}}"></script>

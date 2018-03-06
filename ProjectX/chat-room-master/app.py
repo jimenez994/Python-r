@@ -1,5 +1,5 @@
 from flask import Flask, session, redirect, render_template, request, flash, url_for, json
-from flask_socketio import SocketIO, emit, join_room
+from flask_socketio import SocketIO, emit, join_room, send
 from flask_login import UserMixin, LoginManager, login_required, current_user, login_user, logout_user
 from dbModel import UserAccounts, Message, db
 from functools import wraps
@@ -10,7 +10,7 @@ import uuid
 import io
 
 app = Flask(__name__)
-app.secret_key = 'super secret string'  # Change this!
+app.secret_key = 'somethingsecret'
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.session_protection = "strong"
@@ -20,27 +20,14 @@ login_manager.login_message_category = "info"
 
 socketio = SocketIO(app)
 async_mode = "eventlet"
-
-
 class User(UserMixin):
     pass
-
-
-def to_json(func):
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        get_fun = func(*args, **kwargs)
-        return json.dumps(get_fun)
-
-    return wrapper
-
 
 def query_user(username):
     user = UserAccounts.query.filter_by(UserName=username).first()
     if user:
         return True
     return False
-
 
 @login_manager.user_loader
 def user_loader(username):
@@ -50,21 +37,14 @@ def user_loader(username):
         return user
     return None
 
-
 @app.route('/')
 @app.route('/index', methods=['GET'])
 @login_required
 def index():
     user_id = session.get('user_id')
 
-    message_data = db.session.query(
-        Message,
-        UserAccounts.MugShot
-    ).join(
-        UserAccounts,
-        UserAccounts.UserName == Message.UserName
-    ).all()
-
+    message_data = db.session.query(Message, UserAccounts.MugShot).join(UserAccounts, UserAccounts.UserName == Message.UserName).all()
+    print message_data
     mug_shot_title = UserAccounts.query.filter_by(UserName=user_id).first().MugShot
     messages_dic = {}
     messages_list = []
@@ -77,7 +57,6 @@ def index():
         messages_list.append(messages_dic)
         messages_dic = {}
     return render_template("index.html", **locals())
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -103,7 +82,6 @@ def login():
         return redirect(url_for('index'))
     return render_template("login.html", error="username or password error")
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
@@ -115,9 +93,7 @@ def register():
     db.session.commit()
     return redirect(url_for("index"))
 
-
 @app.route('/API_check_UserNameExist', methods=['POST'])
-@to_json
 def api_check_user_name_exist():
     username = request.json['username']
     user = UserAccounts.query.filter_by(UserName=username).first()
@@ -125,25 +101,19 @@ def api_check_user_name_exist():
         return "not_exist"
     return "exist"
 
-
 @app.route('/logout')
 def logout():
     logout_user()
     return redirect(url_for('index'))
-
 
 @socketio.on('join')
 def join(message):
     join_room(message['room'])
     print('join')
 
-
 @socketio.on('connect')
 def test_connect():
-    # Userid = session.get('UserId')
-    # print(Userid, 'connectd')
     print('connect')
-
 
 @socketio.on('sendInquiry')
 def send_inquiry(msg):
@@ -164,7 +134,7 @@ def send_inquiry(msg):
         'PictureUrl': mug_shot,
         'msg': msg['msg'],
     }
-    emit('getInquiry', data, room=msg['room'])
+    send('getInquiry', data, room=msg['room'])
 
 if __name__ == '__main__':
     socketio.run(app)
