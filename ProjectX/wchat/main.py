@@ -74,7 +74,7 @@ def handleMessage(msg):
     print '*************************!'
     print session.get('user_id')
     print '*************************!'
-    
+    # need some work on user in session 
     user_id = session.get('user_id')
     # 
     query = "INSERT INTO History (message, created_at, updated_at, User_id) VALUES (:message, NOW(), NOW(), :User_id)"
