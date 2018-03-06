@@ -175,6 +175,7 @@ def send_inquiry(msg):
 def croppic():
     user_id = session.get('user_id')
     try:
+        
         # imgUrl 		// your image path (the one we recieved after successfull upload)
         img_url = request.form['imgUrl']
         # imgInitW  	// your image original width (the one we recieved after upload)

@@ -72,6 +72,7 @@ def register():
 @socketio.on('message')
 def handleMessage(msg):
     print '*************************!'
+    # still getting None
     print session.get('user_id')
     print '*************************!'
     # need some work on user in session 
