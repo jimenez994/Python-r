@@ -54,4 +54,4 @@ def left(message):
     emit('status',{'msg':session.get('name') + 'has left'}, room=room)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    socketio.run(app, host="0.0.0.0")

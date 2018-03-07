@@ -13,7 +13,6 @@ urlpatterns = [
     url(r'^upload/(?P<id>\d+)$', views.upload),
     url(r'^comment/(?P<post_id>\d+)$', views.comment),
     url(r'^add/(?P<id>\d+)$', views.add),
-
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
