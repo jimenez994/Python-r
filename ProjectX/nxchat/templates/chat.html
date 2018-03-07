@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ room }}</title>
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Welcome to room, {{ room }}</h1>
+    <textarea id="chat" cols="80" rows="20"></textarea><br>
+    <input type="text" id="text" size="80" placeholder="message.."><br>
+    <a href="/logout" onclick="leave_room();">logout</a>
+
+    <script>
+        var socket;
+        socket = io.connect('http://'+ document.domain + ':' + location.port + '/chat');
+        socket.on('connect', function () {
+            socket.emit('joined',{});
+        });
+
+        // notification of who join
+        socket.on('status', function (data) {
+            // is going to show a notification of who join the chat
+            $('#chat').val($('#chat').val() + '*' + data.msg + '\n');
+            // it will update the chat to scroll if need it after someone has join
+            $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        })
+
+        // new message 
+        socket.on('message', function (data) {
+            // is goin to add new message to the chat
+            $('#chat').val($('#chat').val() + data.msg + '\n')
+            // it will update the chat to scroll if need it after the new message            
+            $('#chat').scrollTop($('#chat')[0].scrollHeight);
+        })
+
+        // when the enter key is pressed send the message
+        $('#text').keypress(function(event) {
+            // setting the variable of any key that pressed 
+            var code = event.keyCode || event.which;
+            // if the key is equal to 13 do this 
+            if (code == 13) {
+                // send the message
+                text = $('#text').val();
+                $('#text').val('');
+                socket.emit('text', {msg: text});
+            }
+        });
+
+        // socket gets disconnected and takes you to login page
+        function leave_room() {
+            socket.emit('left', {}, function() {
+                socket.disconnect();
+                window.location.href = "{{ url_for('index') }}"
+            })
+        }
+    </script>
+</body>
+</html>
