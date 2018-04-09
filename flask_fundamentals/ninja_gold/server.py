@@ -6,13 +6,9 @@ app.secret_key = "real madrid"
 def index():
     if 'yourGold' not in session:
         session['yourGold'] = 0
-
     if 'activity' not in session:
         session['activity'] = []
-
     return render_template('index.html')
-
-
 
 @app.route('/process_gold', methods= ['POST'])
 def process():
@@ -21,20 +17,16 @@ def process():
         goldEarn = random.randint(10,20)
         message = "Earn ${} from the {}!".format(goldEarn,request.form['location'])
         session['activity'].append(message)
-        print session['activity']  
-        print message
         session['yourGold'] += goldEarn
     if request.form['location'] == "cave":
         goldEarn = random.randint(5, 10)
         message = "Earn ${} from the {}!".format(goldEarn,request.form['location'])
         session['activity'].append(message)
-        print message
         session['yourGold'] += goldEarn
     if request.form['location'] == "house":
         goldEarn = random.randint(2, 5)
         message = "Earn ${} from the {}!".format(goldEarn,request.form['location'])
         session['activity'].append(message)
-        print message
         session['yourGold'] += goldEarn
     if request.form['location'] == "casino":
         goldEarn = random.randint(-50, 50)
@@ -44,17 +36,8 @@ def process():
             winlose = "Lost"
         message = "{} ${} from the {}!".format(winlose,abs(goldEarn),request.form['location'])
         session['activity'].append(message)
-        print message
         session['yourGold'] += goldEarn
 
-    print session['yourGold']
-
     return redirect('/')
-
-
-
-
-
-
 
 app.run(debug=True)

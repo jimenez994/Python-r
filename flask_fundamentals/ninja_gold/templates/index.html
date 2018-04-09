@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="page">
-        <h1>Ninja Gold</h1>
+        <h1>Ninja Gold 1.0</h1>
         <h3>Your Gold: <span>$</span><span>{{ session['yourGold'] }}</span></h3>
         <div class="location">
             <h3>Farm</h3>
@@ -45,16 +45,13 @@
         </div>
         <h3>Activities</h3>
         <div id="activities">
-           
             {% for bankstatus in session['activity'] %}
                 {% if bankstatus.find('Lost')>=0 %}
                 <p id = "loss">{{bankstatus}}</p>
                 {% else %}
                 <p id = "win">{{bankstatus}}</p>
                  {% endif %}
-
             {% endfor %}
-            
         </div>
     </div>
 </body>
