@@ -3,6 +3,7 @@ import random
 app = Flask(__name__)
 app.secret_key = "real madrid"
 @app.route('/')
+
 def index():
     if 'yourGold' not in session:
         session['yourGold'] = 0
@@ -37,7 +38,6 @@ def process():
         message = "{} ${} from the {}!".format(winlose,abs(goldEarn),request.form['location'])
         session['activity'].append(message)
         session['yourGold'] += goldEarn
-
     return redirect('/')
 
 app.run(debug=True)
